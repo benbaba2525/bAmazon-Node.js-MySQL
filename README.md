@@ -1,1 +1,1 @@
-# bAmazon-Node.js-MySQL
+# bamazon-Node.js-MySQL
