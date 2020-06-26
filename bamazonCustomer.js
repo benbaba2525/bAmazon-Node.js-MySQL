@@ -103,12 +103,42 @@ for (var i = 0; i < res.length; i++){
 };
 console.log("\n\n  Your order is :  ".bold)
 console.log(`\n${table.toString()}\n\n`);
+if(parseInt(answer.qty)>(res[0].stock_quantity)){
+   console.log("\nInsufficient inventory for your requested quantity. We have " 
+   + res[0].stock_quantity + " in stock. Try again.\n")
+ }else{
+    console.log("Your total is :  $"+ (answer.qty * res[0].price));
+ };
 
 });
-          
-            
-     
-       });
+  
+         
+   });
+};
+function update(answer){
+   
+      
 };
 
+/*function updateStockOty(item, qty, stockQty) {
+	// query with an update, set stock equal to stockqty - purchase qty
+	// where the item_id equals the id the user entered
+	connection.query(
+		"UPDATE products SET ? WHERE ?", 
+		[
+			{
+				stock_quantity: stockQty - parseInt(purchaseQty)
+			},
+			{
+				item_id: parseInt(item)
+			}
+		],
+		// throw error if error, else run displayCost
+		function(error, response) {
+			if (error) throw error;
+	});
+}
+
+
+}*/
 

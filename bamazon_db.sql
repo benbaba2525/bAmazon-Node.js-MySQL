@@ -19,7 +19,7 @@ PRIMARY KEY(item_id)
 
 INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES
 ("Face Masks", "Clothing", 1.99, 100),
-("Micro SD Card", "Electronic",29.95, 50),
+("Micro SD Card", "Electronic",29.95, 150),
 ("Wireless Mouse", "Electronic", 14.99, 200),
 ("Pan Set", "Kitchen", 54.95, 150),
 ("Knife Set", "Kitchen", 49.98, 180),
