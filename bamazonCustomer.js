@@ -14,7 +14,7 @@ var connection = mysql.createConnection({
     password:"ben12345",
     database:"bamazon_db"
 });
-var customerOrder;
+
 connection.connect(function(err){
     if(err) throw err;
     console.log("\n **************************************************************\n".magenta);
@@ -112,7 +112,7 @@ function confirmOrder(){
       confirmOrder();
 
      }else{
-      console.log("Your total is :  $"+ (customerOrder.qty * res[0].price));
+      console.log("Your total is :  $"+ (customerOrder.qty * res[0].price).toFixed(2));
       console.log("\n   Thank you for shopping with us.".rainbow);
       askCustomer();
  // Update products left in the stock after customer puchase the order
