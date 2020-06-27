@@ -61,7 +61,7 @@ function confirmOrder(){
           {
           name: "item_id",
           type: "input",
-          message: "Enter the ID of the product that you would like to buy ?",
+          message: "\nEnter the ID of the product that you would like to buy ?",
           validate: function(value){
              // validate the item list is a number betweeen 1 - 12
              if(!isNaN(value) && value > 0 && value <= 12){
@@ -114,6 +114,7 @@ function confirmOrder(){
      }else{
       console.log("Your total is :  $"+ (customerOrder.qty * res[0].price));
       console.log("\n   Thank you for shopping with us.".rainbow);
+      askCustomer();
  // Update products left in the stock after customer puchase the order
     connection.query(
 		"UPDATE products SET ? WHERE ?", 
@@ -133,4 +134,23 @@ function confirmOrder(){
    });     
  });
 };
+
+function askCustomer(){
+      inquirer
+        .prompt([
+          {
+            type: "list",
+            message: "\n\nWould you like to:",
+            choices: ["Continue shopping", "Exit"],
+            name: "restart"
+          }
+        ])
+        .then(function(input) {
+          if (input.restart === "Continue shopping") {
+            displayItems();
+          } else {
+            return;
+          }
+        });
+    };
 
