@@ -14,7 +14,7 @@ var connection = mysql.createConnection({
     password:"ben12345",
     database:"bamazon_db"
 });
-
+var customerOrder;
 connection.connect(function(err){
     if(err) throw err;
     console.log("\n **************************************************************\n".magenta);
@@ -84,61 +84,53 @@ function confirmOrder(){
             return false;
          }
       }
-       ])
-       .then(function(answer){
-          
+      ])
+       .then(function(customerOrder){
+
           var query = "SELECT item_id, product_name, price, stock_quantity FROM products WHERE ? ";
-          connection.query(query, { item_id: answer.item_id }, function(err, res) {
+          connection.query(query, { item_id: customerOrder.item_id }, function(err, res) {
              if(err) throw err;
              var table = new Table({
                head: ["  Item ID ".magenta, "  Product Name".magenta, "  Price ".magenta, "  Qty ".magenta],
                colWidths: [15,30,15,15]
             });
 
-            // table is an Array, so you can `push`, `unshift`, `splice` and friends
-for (var i = 0; i < res.length; i++){
-   table.push(
-      [res[0].item_id,res[0].product_name, `$${res[0].price}`, answer.qty]
-   );
-};
-console.log("\n\n  Your order is :  ".bold)
-console.log(`\n${table.toString()}\n\n`);
-if(parseInt(answer.qty)>(res[0].stock_quantity)){
-   console.log("\nInsufficient inventory for your requested quantity. We have " 
-   + res[0].stock_quantity + " in stock. Try again.\n")
- }else{
-    console.log("Your total is :  $"+ (answer.qty * res[0].price));
- };
+      // Display table for customer order details
+           for (var i = 0; i < res.length; i++){
+           table.push(
+           [res[0].item_id,res[0].product_name, `$${res[0].price}`, customerOrder.qty]
+         );
+       };
+       console.log("\n\n  Your order is :  ".bold)
+       console.log(`\n${table.toString()}\n\n`);
 
-});
-  
-         
-   });
-};
-function update(answer){
-   
-      
-};
+   // if the store has not enough of the product to meet the customer's request.
+   // Will show message for customer to try to order again
+      if(parseInt(customerOrder.qty)>(res[0].stock_quantity)){
+      console.log("\nInsufficient inventory for your requested quantity!!. We have ".bold.red
+      + res[0].stock_quantity + " in stock. Please Try again !!\n".bold.red)
+      confirmOrder();
 
-/*function updateStockOty(item, qty, stockQty) {
-	// query with an update, set stock equal to stockqty - purchase qty
-	// where the item_id equals the id the user entered
-	connection.query(
+     }else{
+      console.log("Your total is :  $"+ (customerOrder.qty * res[0].price));
+      console.log("\n   Thank you for shopping with us.".rainbow);
+ // Update products left in the stock after customer puchase the order
+    connection.query(
 		"UPDATE products SET ? WHERE ?", 
 		[
 			{
-				stock_quantity: stockQty - parseInt(purchaseQty)
+				stock_quantity: res[0].stock_quantity - customerOrder.qty
 			},
 			{
-				item_id: parseInt(item)
+				item_id: res[0].item_id
 			}
 		],
 		// throw error if error, else run displayCost
 		function(error, response) {
-			if (error) throw error;
-	});
-}
-
-
-}*/
+         if (error) throw error;
+	   });
+     }
+   });     
+ });
+};
 

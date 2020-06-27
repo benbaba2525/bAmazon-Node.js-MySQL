@@ -31,4 +31,9 @@ INSERT INTO products (product_name, department_name, price, stock_quantity) VALU
 ("Whole Milk", "Food & Drink", 5.89, 400),
 ("Bread", "Food & Drink", 3.49, 300);
 
+SELECT * FROM products;
+UPDATE product
+ SET stock_quantity = stock_quantity - customerOrder
+ WHERE item_id = 1;
+
 
