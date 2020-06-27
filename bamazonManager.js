@@ -20,8 +20,10 @@ connection.connect(function(err){
     console.log("\n            **************************************************************\n".magenta);
     console.log("                          Welcome to manager menu options ".bold);
     console.log("\n            **************************************************************\n\n".magenta);
- // run the displayItems function after the connection is made to display items list in the table
+
+ // run the displayMenu function after the connection is made to display menu for manager to choose
  displayMenu();
+
 });
 
 function displayMenu(){
@@ -58,7 +60,24 @@ function displayMenu(){
 
 };
 
-// Start display menu for manager to choose
+function askManager(){
+    inquirer
+      .prompt([
+        {
+          type: "list",
+          message: "\n\nWould you like to:",
+          choices: ["Go back to the main menu", "Exit"],
+          name: "restart"
+        }
+      ])
+      .then(function(input) {
+        if (input.restart === "Go back to the main menu") {
+          displayMenu();
+        } else {
+          return;
+        }
+      });
+  };
 
 
 function viewProductSale(){
@@ -79,7 +98,38 @@ function viewProductSale(){
    };
 
    console.log(`\n${table.toString()}\n\n`);
-
+   askManager();
 
     });   
 };
+
+
+      
+    function viewLowInventory() {
+        // save query term
+        var query = "SELECT * FROM products WHERE stock_quantity<5";
+        // run query
+        connection.query(query, function(error, res) {
+            // let us know if error
+            if (error) throw error;
+
+            var table = new Table({
+                head: ["  Item ID ".magenta, "  Product Name".magenta, "  Quantities ".magenta, "  Price ".magenta],
+                colWidths: [15,30,15,15]
+
+            });
+            // Display table for customer order details
+                 for (var i = 0; i < res.length; i++){
+                 table.push(
+                    [res[i].item_id, res[i].product_name,res[i].stock_quantity, `$${res[i].price}`]
+               );
+             };
+             console.log("\n\n  All items with an inventory count lower than five :  ".bold)
+             console.log(`\n${table.toString()}\n\n`);
+         
+            // run function to ask manager ?
+            askManager();
+        });
+    }
+    
+
