@@ -56,6 +56,9 @@ function displayMenu(){
                  case "Add New Product":
                      addNewProduct();
                 break;
+                case "Exit" :
+                    exit();
+                break;
              }
          });
 
@@ -67,15 +70,17 @@ function askManager(){
         {
           type: "list",
           message: "\n\nWould you like to:",
-          choices: ["Go back to the main menu", "Exit"],
+          choices: ["Go back to the main menu","Add more", "Exit"],
           name: "restart"
         }
       ])
       .then(function(input) {
         if (input.restart === "Go back to the main menu") {
           displayMenu();
-        } else {
-          return;
+        } else if(input.restart === "Add more"){
+          addToInventory();
+        }else{
+          connection.end();
         }
       });
   };
@@ -107,32 +112,38 @@ function viewProductSale(){
 
       
     function viewLowInventory() {
+    
         // save query term
         var query = "SELECT * FROM products WHERE stock_quantity<5";
+     
         // run query
         connection.query(query, function(error, res) {
             // let us know if error
-            if (error) throw error;
+            if (res.length > 0) {
 
             var table = new Table({
                 head: ["  Item ID ".magenta, "  Product Name".magenta, "  Quantities ".magenta, "  Price ".magenta],
                 colWidths: [15,30,15,15]
 
             });
+           
             // Display table for customer order details
                  for (var i = 0; i < res.length; i++){
                  table.push(
                     [res[i].item_id, res[i].product_name,res[i].stock_quantity, `$${res[i].price}`]
                );
              };
-             console.log("\n\n  All items with an inventory count lower than five :  ".bold)
+             console.log("\n\n  All items with an inventory that have lower than five quantities :  ".red.bold);
              console.log(`\n${table.toString()}\n\n`);
          
+            }else{
+              console.log("\n\n  All items with inventory are more than five quantities ".green.bold);
+            }
             // run function to ask manager ?
             askManager();
-        });
+          });
     };
-
+  
 
     function addToInventory(){
          inquirer
@@ -140,7 +151,7 @@ function viewProductSale(){
              {
                 name: "item_id",
                 type: "input",
-                message: "\nEnter the ID of the product that you would like to add on ",
+                message: "Enter the ID of the product that you would like to add on ",
           validate: function(value){
               // validate the item list is a number betweeen 1 - 12
              if(!isNaN(value) && value > 0 && value <= 12){
@@ -162,6 +173,7 @@ function viewProductSale(){
                console.log(" Oops, please enter a number greater than 0".red);
                return false;
             }
+           
          }
          ])          
 .then(function(addInventory){
@@ -183,7 +195,6 @@ function viewProductSale(){
  };
  console.log("\n\n      Your product has been added !! Please see details below  ".green.bold)
  console.log(`\n${table.toString()}\n\n`);
-
  //Update the product Qty
     connection.query(
 		"UPDATE products SET ? WHERE ?", 
@@ -198,10 +209,22 @@ function viewProductSale(){
 		// throw error if error, else run displayCost
 		function(error, res) {
          if (error) throw error;
-	   });
+       });
+    // run function to ask manager ?
+    askManager();
+
      });
+  
     })
+    
   };
+
+
+
+  function exit() {
+    console.log("\nHave a nice day!!.");
+    connection.end();
+  }
     
 
 

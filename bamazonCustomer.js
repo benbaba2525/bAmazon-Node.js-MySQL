@@ -61,14 +61,15 @@ function confirmOrder(){
           {
           name: "item_id",
           type: "input",
-          message: "\nEnter the ID of the product that you would like to buy ?",
-          validate: function(value){
+          message: "Enter the ID of the product that you would like to buy ?",
+          validate: (value) =>{
              // validate the item list is a number betweeen 1 - 12
-             if(!isNaN(value) && value > 0 && value <= 12){
+             if((isNaN(value) === false && parseInt(value) > 0 && parseInt(value) <= 12)){
                 return true;
-             }
-             console.log(" Please enter a number from 1-12 ".red);
+             }else{
+              console.log(" Please enter a number from 1-12 ".red);
              return false;
+             }
           }
         },
         {
@@ -77,11 +78,12 @@ function confirmOrder(){
          message: "How many units of the product would like to buy ?",
          // validate the quantity is a number larger than 0
          validate: function(value) {
-            if (value > 0 && isNaN(value) === false) {
+            if (parseInt(value) > 0 && isNaN(value) === false) {
                return true;
-            }
+            }else{
             console.log(" Oops, please enter a number greater than 0".red);
             return false;
+           }
          }
       }
       ])
