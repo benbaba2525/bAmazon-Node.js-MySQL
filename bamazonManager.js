@@ -4,6 +4,7 @@ const inquirer = require("inquirer");
 const Table = require('cli-table');
 
 
+
 var connection = mysql.createConnection({
     host: "localhost",
 
@@ -130,6 +131,82 @@ function viewProductSale(){
             // run function to ask manager ?
             askManager();
         });
-    }
+    };
+
+
+    function addToInventory(){
+         inquirer
+         .prompt([
+             {
+                name: "item_id",
+                type: "input",
+                message: "\nEnter the ID of the product that you would like to add on ",
+          validate: function(value){
+              // validate the item list is a number betweeen 1 - 12
+             if(!isNaN(value) && value > 0 && value <= 12){
+                return true;
+             }
+             console.log(" Please enter a number from 1-12 ".red);
+             return false;
+            }
+          },
+          {
+            name: "qty",
+            type: "input",
+            message: "How many units of the product you would like to add it on ?",
+            // validate the quantity is a number larger than 0
+            validate: function(value) {
+               if (value > 0 && isNaN(value) === false) {
+                  return true;
+               }
+               console.log(" Oops, please enter a number greater than 0".red);
+               return false;
+            }
+         }
+         ])          
+.then(function(addInventory){
+
+    var query = "SELECT item_id, product_name, stock_quantity, price FROM products WHERE ? ";
+    connection.query(query, { item_id: addInventory.item_id }, function(err, res) {
+       if(err) throw err;
+       var table = new Table({
+         head: ["  Item ID ".magenta, "  Product Name".magenta,"  Qty ".magenta, "  Price ".magenta],
+         colWidths: [15,30,15,15]
+      });
+  
+       var stock = parseInt(addInventory.qty) +  parseInt(res[0].stock_quantity);
+// Display table for customer order details
+     for (var i = 0; i < res.length; i++){
+     table.push(
+     [res[0].item_id,res[0].product_name,stock, `$${res[0].price}`]
+   );
+ };
+ console.log("\n\n      Your product has been added !! Please see details below  ".green.bold)
+ console.log(`\n${table.toString()}\n\n`);
+
+ //Update the product Qty
+    connection.query(
+		"UPDATE products SET ? WHERE ?", 
+		[
+			{
+				stock_quantity: stock
+			},
+			{
+				item_id: res[0].item_id
+			}
+		],
+		// throw error if error, else run displayCost
+		function(error, res) {
+         if (error) throw error;
+	   });
+     });
+    })
+  };
+    
+
+
+
+
+
     
 

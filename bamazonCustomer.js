@@ -127,7 +127,7 @@ function confirmOrder(){
 			}
 		],
 		// throw error if error, else run displayCost
-		function(error, response) {
+		function(error, res) {
          if (error) throw error;
 	   });
      }
