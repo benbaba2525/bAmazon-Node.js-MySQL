@@ -56,6 +56,8 @@ confirmOrder();
 
 //Function prompt to ask for the ID of the product they would like to buy
 function confirmOrder(){
+   connection.query("SELECT * FROM products", function (error, res) {
+      if (error) throw error;
    inquirer
        .prompt([
           {
@@ -67,7 +69,7 @@ function confirmOrder(){
              if((isNaN(value) === false && parseInt(value) > 0 && parseInt(value) <= 12)){
                 return true;
              }else{
-              console.log(" Please enter a number from 1-12 ".red);
+               console.log(" Please enter a number from 1-".red.bold +res.length+ "!! ".red.bold);
              return false;
              }
           }
@@ -135,6 +137,7 @@ function confirmOrder(){
      }
    });     
  });
+});
 };
 
 function askCustomer(){

@@ -127,6 +127,9 @@ function viewLowInventory() {
   
 
     function addToInventory(){
+      connection.query("SELECT * FROM products", function (error, res) {
+        if (error) throw error;
+
          inquirer
          .prompt([
              {
@@ -138,7 +141,7 @@ function viewLowInventory() {
              if(!isNaN(value) && value > 0 && value <= res.length){
                 return true;
              }
-             console.log(" Please enter a number from 1-12 ".red);
+             console.log(` Please enter a number from 1-${res.length}!!`.red.bold);
              return false;
             }
           },
@@ -155,6 +158,7 @@ function viewLowInventory() {
                return false;
             }
          }
+        
 ])         
          
 .then(function(addInventory){
@@ -197,7 +201,7 @@ function viewLowInventory() {
      });
   
     })
-  
+      });
       };
 
   function addNewProduct(){
@@ -251,26 +255,6 @@ function viewLowInventory() {
       });
   });
 };
-
-function consoleTable(title, res) {
-	// init empty values array for console table
-	var values = [];
-	// loop through all results
-	for (var i = 0; i < res.length; i++) {
-		// save info to an object on each iteration, object properties will be 
-		// column headers in console table
-		var resultObject = {
-			ID: res[i].item_id,
-			Item: res[i].product_name,
-			Price: "$" + res[i].price,
-			Inventory: res[i].stock_quantity + " units"
-		};
-		// push the resultObject to values array
-		values.push(resultObject);
-	}
-	// create table titled prod inv data with data in values array
-	console.table(title, values);
-}
 
   function exit() {
     console.log("\n   Have a nice day!!.\n".random);
