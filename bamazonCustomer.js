@@ -65,11 +65,11 @@ function confirmOrder(){
           type: "input",
           message: "Enter the ID of the product that you would like to buy ?",
           validate: (value) =>{
-             // validate the item list is a number betweeen 1 - 12
-             if((isNaN(value) === false && parseInt(value) > 0 && parseInt(value) <= 12)){
+             // validate the item list 
+             if((isNaN(value) === false && parseInt(value) > 0 && parseInt(value) <= res.length)){
                 return true;
              }else{
-               console.log(" Please enter a number from 1-".red.bold +res.length+ "!! ".red.bold);
+               console.log(` Please enter a number from 1-${res.length}!!`.red.bold);
              return false;
              }
           }
