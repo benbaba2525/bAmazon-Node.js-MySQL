@@ -38,7 +38,8 @@ function displayMenu(){
                  "View Products for Sale",
                  "View Low Inventory",
                  "Add to Inventory",
-                 "Add New Product"
+                 "Add New Product",
+                 "Exit"
              ]
              }
          ])
@@ -60,30 +61,9 @@ function displayMenu(){
                     exit();
                 break;
              }
-         });
+      });
 
 };
-
-function askManager(){
-    inquirer
-      .prompt([
-        {
-          type: "list",
-          message: "\n\nWould you like to:",
-          choices: ["Go back to the main menu","Add more", "Exit"],
-          name: "restart"
-        }
-      ])
-      .then(function(input) {
-        if (input.restart === "Go back to the main menu") {
-          displayMenu();
-        } else if(input.restart === "Add more"){
-          addToInventory();
-        }else{
-          connection.end();
-        }
-      });
-  };
 
 
 function viewProductSale(){
@@ -104,14 +84,15 @@ function viewProductSale(){
    };
 
    console.log(`\n${table.toString()}\n\n`);
-   askManager();
+
+  //Ask to go back to the main menu or exit
+  displayMenu();
 
     });   
 };
 
 
-      
-    function viewLowInventory() {
+function viewLowInventory() {
     
         // save query term
         var query = "SELECT * FROM products WHERE stock_quantity<5";
@@ -133,14 +114,14 @@ function viewProductSale(){
                     [res[i].item_id, res[i].product_name,res[i].stock_quantity, `$${res[i].price}`]
                );
              };
-             console.log("\n\n  All items with an inventory that have lower than five quantities :  ".red.bold);
+             console.log("\n\n  All items in the stock that are lower than five quantities :  ".red.bold);
              console.log(`\n${table.toString()}\n\n`);
          
             }else{
-              console.log("\n\n  All items with inventory are more than five quantities ".green.bold);
+              console.log("\n\n  All items in the stock that are more than five quantities ".green.bold);
             }
-            // run function to ask manager ?
-            askManager();
+          // run function to ask if they want to add more item , go back to the main menu or exit 
+          displayMenu();
           });
     };
   
@@ -153,8 +134,8 @@ function viewProductSale(){
                 type: "input",
                 message: "Enter the ID of the product that you would like to add on ",
           validate: function(value){
-              // validate the item list is a number betweeen 1 - 12
-             if(!isNaN(value) && value > 0 && value <= 12){
+              // validate the item list 
+             if(!isNaN(value) && value > 0 && value <= res.length){
                 return true;
              }
              console.log(" Please enter a number from 1-12 ".red);
@@ -173,9 +154,9 @@ function viewProductSale(){
                console.log(" Oops, please enter a number greater than 0".red);
                return false;
             }
-           
          }
-         ])          
+])         
+         
 .then(function(addInventory){
 
     var query = "SELECT item_id, product_name, stock_quantity, price FROM products WHERE ? ";
@@ -210,21 +191,91 @@ function viewProductSale(){
 		function(error, res) {
          if (error) throw error;
        });
-    // run function to ask manager ?
-    askManager();
+    // run function to ask if they want to add more item , go back to the main menu or exit 
+    displayMenu();
 
      });
   
     })
-    
-  };
+  
+      };
 
+  function addNewProduct(){
+    inquirer.prompt([
+      {
+          name: 'name',
+          type: 'input',
+          message: 'Enter the product name:'
+      },
+      {
+          name: 'department',
+          type: 'input',
+          message: 'Enter the product department:'
+      },
+      {
+          name: 'price',
+          type: 'input',
+          message: 'Enter the product price:',
+          validate: function(value){
+              if (!isNaN(value) && value > 0) {
+                  return true;
+              } else {
+                  console.log("=> Oops, please enter a number greater than 0".red);
+                  return false;
+              }
+          }
+      }, 
+      {
+          name: 'qty',
+          type: 'input',
+          message: 'Enter the item quantity :',
+          validate: (value) => {
+              if (!isNaN(value) && value > 0) {
+                  return true;
+              } else {
+                  console.log(" => Oops, please enter a number greater than 0".red);
+                  return false;
+              }
+          }
+      }
+  ]).then(function(newProduct) {
+      connection.query('INSERT INTO products SET ?', {
+          product_name: newProduct.name,
+          department_name: newProduct.department,
+          price: newProduct.price,
+          stock_quantity: newProduct.qty
+      }, (err, res) => {
+          if (err) throw err;
+          console.log("\n\tYou have successfully added a new product!!".random);
+         displayMenu();
+      });
+  });
+};
 
+function consoleTable(title, res) {
+	// init empty values array for console table
+	var values = [];
+	// loop through all results
+	for (var i = 0; i < res.length; i++) {
+		// save info to an object on each iteration, object properties will be 
+		// column headers in console table
+		var resultObject = {
+			ID: res[i].item_id,
+			Item: res[i].product_name,
+			Price: "$" + res[i].price,
+			Inventory: res[i].stock_quantity + " units"
+		};
+		// push the resultObject to values array
+		values.push(resultObject);
+	}
+	// create table titled prod inv data with data in values array
+	console.table(title, values);
+}
 
   function exit() {
-    console.log("\nHave a nice day!!.");
+    console.log("\n   Have a nice day!!.\n".random);
     connection.end();
-  }
+  };
     
 
 
