@@ -154,7 +154,7 @@ function askCustomer(){
           if (input.restart === "Continue shopping") {
             displayItems();
           } else {
-            return;
+            connection.end();
           }
         });
     };

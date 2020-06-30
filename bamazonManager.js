@@ -73,14 +73,14 @@ function viewProductSale(){
         // instantiate
         console.log("\n\n                              Items list      ".bold);
       var table = new Table({
-      head: ["  Item ID ".magenta, "  Product Name".magenta,"Quantities".magenta, "  Price ".magenta],
-      colWidths: [15,30,18,15]
+      head: ["  Item ID ".magenta, "  Product Name".magenta,"Department Name".magenta,"Quantities".magenta, "  Price ".magenta],
+      colWidths: [15,25,25,15,15]
    });
         
    // // Display table for manager to view
    for (var i = 0; i < res.length; i++){
       table.push(
-         [res[i].item_id, res[i].product_name,res[i].stock_quantity, `$${res[i].price}`]
+         [res[i].item_id, res[i].product_name,res[i].department_name,res[i].stock_quantity, `$${res[i].price}`]
       );
    };
 
@@ -104,15 +104,15 @@ function viewLowInventory() {
             if (res.length > 0) {
 
             var table = new Table({
-                head: ["  Item ID ".magenta, "  Product Name".magenta, "  Quantities ".magenta, "  Price ".magenta],
-                colWidths: [15,30,15,15]
+                head: ["  Item ID ".magenta, "  Product Name".magenta,"Department Name".magenta, "  Quantities ".magenta, "  Price ".magenta],
+                colWidths:  [15,25,25,15,15]
 
             });
            
             // Display table for customer order details
                  for (var i = 0; i < res.length; i++){
                  table.push(
-                    [res[i].item_id, res[i].product_name,res[i].stock_quantity, `$${res[i].price}`]
+                    [res[i].item_id, res[i].product_name,res[i].department_name,res[i].stock_quantity, `$${res[i].price}`]
                );
              };
              console.log("\n\n  All items in the stock that are lower than five quantities :  ".red.bold);
@@ -164,19 +164,19 @@ function viewLowInventory() {
          
 .then(function(addInventory){
 
-    var query = "SELECT item_id, product_name, stock_quantity, price FROM products WHERE ? ";
+    var query = "SELECT item_id, product_name,department_name, stock_quantity, price FROM products WHERE ? ";
     connection.query(query, { item_id: addInventory.item_id }, function(err, res) {
        if(err) throw err;
        var table = new Table({
-         head: ["  Item ID ".magenta, "  Product Name".magenta,"  Qty ".magenta, "  Price ".magenta],
-         colWidths: [15,30,15,15]
+         head: ["  Item ID ".magenta, "  Product Name ".magenta,"Department Name".magenta,"  Qty ".magenta, "  Price ".magenta],
+         colWidths: [15,25,25,15,15]
       });
   
        var stock = parseInt(addInventory.qty) +  parseInt(res[0].stock_quantity);
 // Display table for customer order details
      for (var i = 0; i < res.length; i++){
      table.push(
-     [res[0].item_id,res[0].product_name,stock, `$${res[0].price}`]
+        [res[i].item_id, res[i].product_name,res[i].department_name,res[i].stock_quantity, `$${res[i].price}`]
    );
  };
  console.log("\n\n      Your product has been added !! Please see details below  ".green.bold)
@@ -267,15 +267,15 @@ function addMore(){
         {	
           type: "list",	
           message: "\n\nWould you like to:",	
-          choices: ["Go back to the main menu","Add more quantity", "Exit"],	
+          choices: ["Add more quantity","Go back to the main menu", "Exit"],	
           name: "restart"	
         }	
       ])	
       .then(function(input) {	
-        if (input.restart === "Go back to the main menu") {	
-          displayMenu();	
-        } else if(input.restart === "Add more quantity"){	
-          addToInventory();	
+        if (input.restart === "Add more quantity"){	
+            addToInventory();	
+        } else if(input.restart === "Go back to the main menu") {	
+            displayMenu();	
         }else{	
           connection.end();	
         }	
@@ -288,15 +288,15 @@ function addMore(){
         {	
           type: "list",	
           message: "\n\nWould you like to:",	
-          choices: ["Go back to the main menu","Add more new product", "Exit"],	
+          choices: ["Add more new product","Go back to the main menu", "Exit"],	
           name: "restart"	
         }	
       ])	
       .then(function(input) {	
-        if (input.restart === "Go back to the main menu") {	
-          displayMenu();	
-        } else if(input.restart === "Add more new product"){	
+        if (input.restart === "Add more new product"){	
             addNewProduct();
+        } else if(input.restart === "Go back to the main menu") {	
+            displayMenu();	
         }else{	
           connection.end();	
         }	

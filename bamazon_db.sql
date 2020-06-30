@@ -32,6 +32,26 @@ INSERT INTO products (product_name, department_name, price, stock_quantity) VALU
 ("Bread", "Food & Drink", 3.49, 300);
 
 
+CREATE TABLE departments (
+
+department_id INT AUTO_INCREMENT  NOT NULL,
+department_name VARCHAR(100) NULL,
+over_head_costs  DECIMAL(10,2) NOT NULL ,
+PRIMARY KEY(department_id)
+
+);
+
+INSERT INTO departments (department_name, over_head_costs)
+VALUES
+('Clothing',3000),
+('Kitchen', 3000),
+('Office Products', 6000),
+('Electronics', 10000),
+('Sport', 8000),
+('Movies', 8000),
+('Food & Drink', 7000);
+
+
 
 SELECT * FROM products;
 
@@ -41,5 +61,8 @@ DELETE FROM products WHERE item_id = 18;
 UPDATE products
  SET stock_quantity = 4
  WHERE item_id = 1;
+
+
+ 
 
 
