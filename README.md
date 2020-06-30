@@ -3,9 +3,15 @@
 
 
 
+![alt-concert-this](https://github.com/benbaba2525/bamazon/blob/master/Gif/customerOrder.gif)
 
 
+![alt-concert-this](https://github.com/benbaba2525/bamazon/blob/master/Gif/managerView.gif)
 
+
+![alt-concert-this](https://github.com/benbaba2525/bamazon/blob/master/Gif/addQty.gif)
+
+![alt-concert-this](https://github.com/benbaba2525/bamazon/blob/master/Gif/addNew.gif)
 
 
 ## Authors
