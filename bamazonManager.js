@@ -25,6 +25,7 @@ connection.connect(function(err){
  // run the displayMenu function after the connection is made to display menu for manager to choose
  displayMenu();
 
+
 });
 
 function displayMenu(){
@@ -180,6 +181,8 @@ function viewLowInventory() {
  };
  console.log("\n\n      Your product has been added !! Please see details below  ".green.bold)
  console.log(`\n${table.toString()}\n\n`);
+
+
  //Update the product Qty
     connection.query(
 		"UPDATE products SET ? WHERE ?", 
@@ -194,15 +197,17 @@ function viewLowInventory() {
 		// throw error if error, else run displayCost
 		function(error, res) {
          if (error) throw error;
+         addMore();
        });
     // run function to ask if they want to add more item , go back to the main menu or exit 
-    displayMenu();
+   
 
-     });
+       });
   
-    })
-      });
-      };
+    });
+ });
+ 
+};
 
   function addNewProduct(){
     inquirer.prompt([
@@ -251,11 +256,54 @@ function viewLowInventory() {
       }, (err, res) => {
           if (err) throw err;
           console.log("\n\tYou have successfully added a new product!!".random);
-         displayMenu();
+          addMoreNewProduct();
       });
   });
 };
 
+function addMore(){	
+    inquirer	
+      .prompt([	
+        {	
+          type: "list",	
+          message: "\n\nWould you like to:",	
+          choices: ["Go back to the main menu","Add more quantity", "Exit"],	
+          name: "restart"	
+        }	
+      ])	
+      .then(function(input) {	
+        if (input.restart === "Go back to the main menu") {	
+          displayMenu();	
+        } else if(input.restart === "Add more quantity"){	
+          addToInventory();	
+        }else{	
+          connection.end();	
+        }	
+      });	
+  };
+
+  function addMoreNewProduct(){	
+    inquirer	
+      .prompt([	
+        {	
+          type: "list",	
+          message: "\n\nWould you like to:",	
+          choices: ["Go back to the main menu","Add more new product", "Exit"],	
+          name: "restart"	
+        }	
+      ])	
+      .then(function(input) {	
+        if (input.restart === "Go back to the main menu") {	
+          displayMenu();	
+        } else if(input.restart === "Add more new product"){	
+            addNewProduct();
+        }else{	
+          connection.end();	
+        }	
+      });	
+  };
+
+  
   function exit() {
     console.log("\n   Have a nice day!!.\n".random);
     connection.end();

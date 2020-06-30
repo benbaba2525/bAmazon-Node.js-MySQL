@@ -31,11 +31,15 @@ INSERT INTO products (product_name, department_name, price, stock_quantity) VALU
 ("Whole Milk", "Food & Drink", 5.89, 400),
 ("Bread", "Food & Drink", 3.49, 300);
 
-SELECT * FROM products
-WHERE stock_quantity < 3 ;
+
+
+SELECT * FROM products;
+
+DELETE FROM products WHERE item_id = 18;
+
 
 UPDATE products
- SET stock_quantity = 3
- WHERE item_id = 2;
+ SET stock_quantity = 4
+ WHERE item_id = 1;
 
 

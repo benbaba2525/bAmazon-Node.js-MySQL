@@ -33,14 +33,14 @@ function displayItems(){
      // instantiate
      console.log("\n\n                          Items list      ".bold);
    var table = new Table({
-   head: ["  Item ID ".magenta, "  Product Name".magenta, "  Price ".magenta],
-   colWidths: [15,30,15]
+   head: ["  Item ID ".magenta, "  Product Name".magenta,"  Price ".magenta,"Department Name".magenta],
+   colWidths: [15,30,15,25]
 });
      
 // table is an Array, so you can `push`, `unshift`, `splice` and friends
 for (var i = 0; i < res.length; i++){
    table.push(
-      [res[i].item_id, res[i].product_name, `$${res[i].price}`]
+      [res[i].item_id, res[i].product_name,  `$${res[i].price}`,res[i].department_name]
    );
 };
 
