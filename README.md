@@ -14,6 +14,10 @@
 ![alt-concert-this](https://github.com/benbaba2525/bamazon/blob/master/Gif/addNew.gif)
 
 
+
+
+
+
 ## Authors
   - Kanyarut Pornamnuay
   <br><a target="_blank" rel="nofollow" href="https://github.com/benbaba2525">Visit My Github Profile</a>
@@ -25,8 +29,10 @@
 
 ## Helpful Link
 
-  - <a target="_blank" rel="nofollow" https://en.wikipedia.org/wiki/SQL">SQL</a>
-  - <a target="_blank" rel="nofollow" https://en.wikipedia.org/wiki/MySQL">MySQL</a>
-  - <a target="_blank" rel="nofollow" https://dev.mysql.com/doc/workbench/en/">MySQL Workbench Documentation</a>
-  - <a target="_blank" rel="nofollow" https://www.npmjs.com/package/mysql">MySQL NPM Package</a>
+  - <a target="_blank" rel="nofollow" href="https://en.wikipedia.org/wiki/SQL">SQL</a>
+  - <a target="_blank" rel="nofollow" href="https://en.wikipedia.org/wiki/MySQL">MySQL</a>
+  - <a target="_blank" rel="nofollow" href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench Documentation</a>
+  - <a target="_blank" rel="nofollow" href="https://www.npmjs.com/package/mysql">MySQL NPM Package</a>
+  
+  
   
