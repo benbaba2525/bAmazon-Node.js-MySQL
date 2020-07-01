@@ -14,6 +14,9 @@
 ![alt-concert-this](https://github.com/benbaba2525/bamazon/blob/master/Gif/addNew.gif)
 
 
+### NPM Packages:
+- <a href="https://www.npmjs.com/package/mysql">MySQL</a>
+- <a href="https://www.npmjs.com/package/inquirer">Inquirer</a>
 
 
 
@@ -32,7 +35,11 @@
   - <a target="_blank" rel="nofollow" href="https://en.wikipedia.org/wiki/SQL">SQL</a>
   - <a target="_blank" rel="nofollow" href="https://en.wikipedia.org/wiki/MySQL">MySQL</a>
   - <a target="_blank" rel="nofollow" href="https://dev.mysql.com/doc/workbench/en/">MySQL Workbench Documentation</a>
-  - <a target="_blank" rel="nofollow" href="https://www.npmjs.com/package/mysql">MySQL NPM Package</a>
+  - <a target="_blank" rel="nofollow" href="https://www.npmjs.com/package/inquirer">Inquirer</a>
+  - <a target="_blank" rel="nofollow" href="https://www.npmjs.com/package/colors">Colors</a>
+  - <a target="_blank" rel="nofollow" href=" https://www.npmjs.com/package/cli-table">CLI-Table</a>
+  Inquirer
+ 
   
   
   
