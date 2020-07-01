@@ -35,9 +35,13 @@ Run the following in your CLI : `node bamazonManager.js`
 ![alt-concert-this](https://github.com/benbaba2525/bamazon/blob/master/Gif/managerView.gif)
 
 - If a manager selects :` Add to Inventory`, the app will display a prompt that will let the manager "add more" of any item currently in the store.
+
+
 ![alt-concert-this](https://github.com/benbaba2525/bamazon/blob/master/Gif/addQty.gif)
 
 - If a manager selects :` Add New Product`, it will allow the manager to add a completely new product to the store.
+
+
 ![alt-concert-this](https://github.com/benbaba2525/bamazon/blob/master/Gif/addNew.gif)
 
 ### Tools/Languages Used:
