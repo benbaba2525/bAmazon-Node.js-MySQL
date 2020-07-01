@@ -7,7 +7,8 @@ This is a simple e-commerce app that have two interfaces --One for customers and
 * `On manager and supervisors interface :` The app will help managers to perform inventory control and add exiting products quantity or abb new products. For supervisors the app will help to track department profitability and the total of products sale by department.
 
 ### Getting Started
-1. Clone the repository.
+
+1. Copy this link and Clone the repository on your terminal : <a href="https://github.com/benbaba2525/bamazon.git"> Copy me !!</a>
 2. Run command npm install in Terminal.
 3. Set up MySQL database. If you do not already have MySQL installed, you can visit the installation page to install the correct version of MySQL for your    
    machine. Once you have installed MySQL, create the Bamazon database used the SQL code in Bamazon.sql.
