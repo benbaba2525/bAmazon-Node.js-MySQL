@@ -54,7 +54,7 @@ Run the following in your CLI : `node bamazonManager.js`
 - <a href="https://www.npmjs.com/package/mysql">MySQL</a>
 - <a href="https://www.npmjs.com/package/inquirer">Inquirer</a>
 - <a target="_blank" rel="nofollow" href="https://www.npmjs.com/package/colors">Colors</a>
-- <a target="_blank" rel="nofollow" href=" https://www.npmjs.com/package/cli-table">CLI-Table</a>
+- <a target="_blank" rel="nofollow" href="https://www.npmjs.com/package/cli-table">CLI-Table</a>
 
 
 ### Authors
