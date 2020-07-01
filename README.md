@@ -22,12 +22,15 @@ Run the following in your CLI : `node bamazonCustomer.js`
   1. The app will ask them the ID of the product they would like to buy.
   2. The app will ask how many units of the product they would like to buy.
 - Once the customer has placed the order, The application will check if your store has enough of the product to meet the customer's request.If not, the app should log a phrase like Insufficient quantity!, and then prevent the order from going through.
--If your store does have enough of the product, it will fulfill the customer's order and show the customer the total cost of their purchase.
-
+- If your store does have enough of the product, it will fulfill the customer's order and show the customer the total cost of their purchase.
 
 
 ![alt-concert-this](https://github.com/benbaba2525/bamazon/blob/master/Gif/customerOrder.gif)
 
+### Managers
+Run the following in your CLI : `node bamazonManager.js`
+- If a manager selects : `View Products for Sale`, the app will list every available item: the item IDs, names, prices, and quantities.
+- If a manager selects: `View Low Inventory`, then it will list all items with an inventory count lower than five.
 
 ![alt-concert-this](https://github.com/benbaba2525/bamazon/blob/master/Gif/managerView.gif)
 
