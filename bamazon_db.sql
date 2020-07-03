@@ -19,19 +19,19 @@ PRIMARY KEY(item_id)
 
 INSERT INTO products (product_name, department_name, price, stock_quantity) VALUES
 ("Face Masks", "Clothing", 1.99, 100),
-("Micro SD Card", "Electronic",29.95, 150),
-("Wireless Mouse", "Electronic", 14.99, 200),
+("Micro SD Card", "Electronics",29.95, 150),
+("Wireless Mouse", "Electronics", 14.99, 200),
 ("Pan Set", "Kitchen", 54.95, 150),
 ("Knife Set", "Kitchen", 49.98, 180),
 ("Star Wars Blue-Ray", "Movies", 17.25, 100),
-("Pens 2-Packs", "Office Product", 2.35, 300),
-("Ink Cartridge", "Office Product", 32.99, 50),
+("Pens 2-Packs", "Office Products", 2.35, 300),
+("Ink Cartridge", "Office Products", 32.99, 50),
 ("Footballs", "Sport", 15.95, 250),
 ("Yoga Mat", "Sport", 23.25, 150),
 ("Whole Milk", "Food & Drink", 5.89, 400),
 ("Bread", "Food & Drink", 3.49, 300);
 
-
+USE bamazon_db;
 CREATE TABLE departments (
 
 department_id INT AUTO_INCREMENT  NOT NULL,
@@ -43,13 +43,13 @@ PRIMARY KEY(department_id)
 
 INSERT INTO departments (department_name, over_head_costs)
 VALUES
-('Clothing',3000),
+('Clothing',300),
 ('Kitchen', 3000),
-('Office Products', 6000),
-('Electronics', 10000),
-('Sport', 8000),
-('Movies', 8000),
-('Food & Drink', 7000);
+('Office Product', 500),
+('Electronic', 2000),
+('Sport', 2000),
+('Movies', 1000),
+('Food & Drink', 100);
 
 
 
@@ -59,7 +59,7 @@ DELETE FROM products WHERE item_id = 18;
 
 
 UPDATE products
- SET stock_quantity = 4
+ SET Electronics = Electronic
  WHERE item_id = 1;
 
 

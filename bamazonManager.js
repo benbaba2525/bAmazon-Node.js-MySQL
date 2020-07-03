@@ -34,7 +34,7 @@ function displayMenu(){
              {
              name: "action",
              type: "rawlist",
-             message: "\nChoose on a menu option : ",
+             message: "\nChoose on a menu options : ",
              choices :[
                  "View Products for Sale",
                  "View Low Inventory",

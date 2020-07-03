@@ -42,10 +42,10 @@ var displayMenu = function() {
     inquirer.prompt({
         name: 'action',
         type: 'rawlist',
-        message: 'Choose an action:',
+        message: 'Choose on a menu options :',
         choices: [
             'View Departments',
-            'View Product Sales by Department',
+            'View Products Sales by Department',
             'Create New Department',
             'Delete A Department'
         ]
@@ -67,32 +67,55 @@ var displayMenu = function() {
     });
 };
 
+
 var viewDepartments = function() {
     connection.query('SELECT * FROM departments', (err, res) => {
         var listTable = new Table({
-            head: ['Dept ID', 'Dept Name', 'Overhead'],
-            colWidths: [10, 25, 12]
+            head: ['Department ID'.magenta, 'Department Name'.magenta, 'Overhead'.magenta],
+            colWidths: [15, 25, 15]
         });
 
         for (var i = 0; i < res.length; i++) {
             listTable.push([res[i].department_id, res[i].department_name, `$${res[i].over_head_costs}`])
-            // console.log(chalk.blue.bold(`\n\tDept ID: ${res[i].department_id}\n\tDept Name: ${res[i].department_name}\n\tOverhead Costs: $${res[i].over_head_costs}\n`));
+           
         }
 
         console.log(`\n\n${listTable.toString()}\n\n`);
-        connection.end();
+        displayMenu();
     });
 };
 
-var viewDepartmentSales = function() {
-    connection.query(`SELECT * FROM products`, (err, res) => {
-        for (var i = 0; i < res.length; i++) {
-            console.log(chalk.blue.bold(`\n\tItem ID: ${res[i].item_id}\n\tProduct Name: ${res[i].product_name}\n\tPrice: $${res[i].price}\n`));
-        }
-        connection.end();
-    });
+
+function viewDepartmentSales() {
+
+    connection.query(`SELECT department_id, departments.department_name, over_head_costs, SUM(price) AS productSale,(SUM(price)-over_head_costs) AS profit
+    FROM products JOIN departments
+    ON products.department_name = departments.department_name
+    GROUP BY department_id;`, function(err, res) {
+        if (err) throw err;
+
+            var listTable = new Table({
+                head: ['Department ID'.magenta, 'Department Name'.magenta, 'Overhead'.magenta,'Product Sales'.magenta, 'Total Profit'.magenta],
+                colWidths: [15, 25, 15,15,15]
+            });
+    
+            for (var i = 0; i < res.length; i++) {
+       
+                listTable.push([res[i].department_id, res[i].department_name, `$${res[i].over_head_costs}`,res[i].productSale,res[i].profit])
+
+            }
+    
+            console.log(`\n\n${listTable.toString()}\n\n`);
+            displayMenu();
+        });
 };
 
+
+      
+       
+       
+       
+       
 var createDepartment = function() {
     inquirer.prompt([
         {
