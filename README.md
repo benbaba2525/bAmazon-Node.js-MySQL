@@ -25,24 +25,31 @@ Run the following in your CLI : `node bamazonCustomer.js`
 - If your store does have enough of the product, it will fulfill the customer's order and show the customer the total cost of their purchase.
 
 
-![alt-concert-this](https://github.com/benbaba2525/bamazon/blob/master/Gif/customerOrder.gif)
+![alt-cutomerorder](https://github.com/benbaba2525/bamazon/blob/master/Gif/customerOrder.gif)
 
 ### Managers
 Run the following in your CLI : `node bamazonManager.js`
 - If a manager selects : `View Products for Sale`, the app will list every available item: the item IDs, names, prices, and quantities.
 - If a manager selects: `View Low Inventory`, then it will list all items with an inventory count lower than five.
 
-![alt-concert-this](https://github.com/benbaba2525/bamazon/blob/master/Gif/managerView.gif)
+![alt-managerview](https://github.com/benbaba2525/bamazon/blob/master/Gif/managerView.gif)
 
 - If a manager selects :` Add to Inventory`, the app will display a prompt that will let the manager "add more" of any item currently in the store.
 
 
-![alt-concert-this](https://github.com/benbaba2525/bamazon/blob/master/Gif/addQty.gif)
+![alt-addQty](https://github.com/benbaba2525/bamazon/blob/master/Gif/addQty.gif)
 
 - If a manager selects :` Add New Product`, it will allow the manager to add a completely new product to the store.
 
 
-![alt-concert-this](https://github.com/benbaba2525/bamazon/blob/master/Gif/addNew.gif)
+![alt-addnew](https://github.com/benbaba2525/bamazon/blob/master/Gif/addNew.gif)
+
+### Supervisor
+- When a supervisor selects `View Product Sales by Department`, the app display a summarized table. The total_profit column show loss or profit by departments.
+- Supervisor can create a new departments or delete an existing department.
+
+
+![alt-supervisor](https://github.com/benbaba2525/bamazon/blob/master/Gif/bamazonSupervisor.gif)
 
 ### Tools/Languages Used:
  - NodeJS
