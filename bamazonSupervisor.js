@@ -47,7 +47,8 @@ var displayMenu = function() {
             'View Departments',
             'View Products Sales by Department',
             'Create New Department',
-            'Delete A Department'
+            'Delete A Department',
+            'Exit'
         ]
     }).then((answer) => {
         switch (answer.action) {
@@ -63,12 +64,15 @@ var displayMenu = function() {
             case 'Delete A Department':
                 deleteDepartment();
                 break;
+                case 'Exit':
+                    exit();
+                    break;
         }
     });
 };
 
 
-var viewDepartments = function() {
+function viewDepartments() {
     connection.query('SELECT * FROM departments', (err, res) => {
         var listTable = new Table({
             head: ['Department ID'.magenta, 'Department Name'.magenta, 'Overhead'.magenta],
@@ -88,7 +92,7 @@ var viewDepartments = function() {
 
 function viewDepartmentSales() {
 
-    connection.query(`SELECT department_id, departments.department_name, over_head_costs, SUM(price) AS productSale,(SUM(price)-over_head_costs) AS profit
+    connection.query(`SELECT department_id, departments.department_name, over_head_costs, SUM(productSale) AS product_Sale,(SUM(productSale)-over_head_costs) AS profit
     FROM products JOIN departments
     ON products.department_name = departments.department_name
     GROUP BY department_id;`, function(err, res) {
@@ -101,7 +105,7 @@ function viewDepartmentSales() {
     
             for (var i = 0; i < res.length; i++) {
        
-                listTable.push([res[i].department_id, res[i].department_name, `$${res[i].over_head_costs}`,res[i].productSale,res[i].profit])
+                listTable.push([res[i].department_id, res[i].department_name, `$${res[i].over_head_costs}`,res[i].product_Sale,res[i].profit])
 
             }
     
@@ -111,12 +115,9 @@ function viewDepartmentSales() {
 };
 
 
-      
+         
        
-       
-       
-       
-var createDepartment = function() {
+function createDepartment() {
     inquirer.prompt([
         {
             name: 'name',
@@ -131,7 +132,7 @@ var createDepartment = function() {
                 if (!isNaN(value) && value > 0) {
                     return true;
                 } else {
-                    console.log(chalk.red(' => Oops, please enter a number greater than 0'));
+                    console.log(' => Oops, please enter a number greater than 0'.red);
                     return false;
                 }
             }
@@ -142,13 +143,13 @@ var createDepartment = function() {
             over_head_costs: answers.overhead
         }, (err, res) => {
             if (err) throw err;
-            console.log(chalk.blue.bold('\n\tDepartment successfully added!\n'));
-            connection.end();
+            console.log('\n\tDepartment successfully added!\n'.green);
+            displayMenu();
         });
     });
 };
 
-var deleteDepartment = function() {
+function deleteDepartment() {
     inquirer.prompt({
         name: 'deptID',
         type: 'input',
@@ -158,14 +159,14 @@ var deleteDepartment = function() {
             inquirer.prompt({
                 name: 'confirm',
                 type: 'confirm',
-                message: `You would like to delete` + chalk.blue.bold(` '${res[0].department_name}'. `) + `Is this correct?`
+                message: `You would like to delete !!`.red.bold + (` '${res[0].department_name}'. `) + `Is this correct?`.red.bold
             }).then((answer) => {
                 if (answer.confirm) {
                     deptToDelete.push(res);
                     connection.query('DELETE FROM departments WHERE ?', { department_id: deptToDelete[0][0].department_id }, (err, res) => {
                         if (err) throw err;
-                        console.log(chalk.blue.bold('\n\tDepartment successfully deleted!\n'));
-                        connection.end();
+                        console.log('\n\tDepartment successfully deleted!\n'.green);
+                        displayMenu();
                     });
                 } else {
                     deleteDepartment();
@@ -174,3 +175,9 @@ var deleteDepartment = function() {
         });
     });
 };
+
+
+function exit() {
+    console.log("\n   Have a nice day!!.\n".random);
+    connection.end();
+  };

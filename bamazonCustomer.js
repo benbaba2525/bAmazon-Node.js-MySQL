@@ -126,14 +126,29 @@ function confirmOrder(){
 			{
 				stock_quantity: res[0].stock_quantity - customerOrder.qty
 			},
-			{
-				item_id: res[0].item_id
-			}
+         {
+            item_id: res[0].item_id
+         }
 		],
 		// throw error if error, else run displayCost
 		function(error, res) {
          if (error) throw error;
-	   });
+      });
+      
+      connection.query(
+         "UPDATE products SET ? WHERE ?", 
+         [
+            {
+               productSale: (customerOrder.qty * res[0].price).toFixed(2) - customerOrder.qty
+            },
+            {
+               item_id: res[0].item_id
+            }
+         ],
+         // throw error if error, else run displayCost
+         function(error, res) {
+            if (error) throw error;
+         });
      }
    });     
  });

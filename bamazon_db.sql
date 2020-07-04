@@ -12,6 +12,7 @@ item_id INT AUTO_INCREMENT  NOT NULL,
 product_name VARCHAR(100) NULL,
 department_name VARCHAR(100) NULL,
 price DECIMAL(10,2) NULL ,
+productSale DECIMAL(10,2) DEFAULT 0 ,
 stock_quantity INT NULL,
 PRIMARY KEY(item_id)
 
@@ -45,8 +46,8 @@ INSERT INTO departments (department_name, over_head_costs)
 VALUES
 ('Clothing',300),
 ('Kitchen', 3000),
-('Office Product', 500),
-('Electronic', 2000),
+('Office Products', 500),
+('Electronics', 2000),
 ('Sport', 2000),
 ('Movies', 1000),
 ('Food & Drink', 100);
@@ -64,5 +65,6 @@ UPDATE products
 
 
  
-
+ALTER TABLE products
+ADD COLUMN productSale DECIMAL(10,2) DEFAULT 0;
 
